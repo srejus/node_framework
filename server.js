@@ -20,5 +20,5 @@ mongoose.connect(process.env.DB_URL)
     console.log("Connected to Database!");
 })
 .catch(() => {
-    console.log("Connection failed!");
+    console.log("Connection failed! Check your .env file for 'DB_URL'");
 })
