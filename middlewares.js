@@ -2,6 +2,7 @@ require('dotenv').config();
 const multer = require('multer');
 const path = require('path');
 const axios = require('axios');
+const fs = require('fs');
 
 const jwt = require('jsonwebtoken');
 
@@ -23,11 +24,16 @@ const validateToken = async(req,res,next) => {
         return res.sendStatus(401);
     }
 }
+
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)) {
+  fs.mkdirSync(uploadsDir, { recursive: true });
+}
  
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, 'uploads/');
+      cb(null, uploadsDir);
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);
