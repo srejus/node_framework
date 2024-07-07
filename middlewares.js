@@ -1,6 +1,8 @@
 require('dotenv').config();
 const multer = require('multer');
 const path = require('path');
+const axios = require('axios');
+const logger = require('./logger');
 
 const jwt = require('jsonwebtoken');
 
@@ -37,4 +39,27 @@ const storage = multer.diskStorage({
   
 const upload = multer({ storage: storage });
 
-module.exports = {validateToken,upload}
+
+const sendMail = async (to, subject, content, isTemplateEmail = false) => {
+    const data = {
+      subject: subject,
+      to_email: to,
+      context: {
+        message: content
+      },
+      api_key: process.env.EMAIL_API_KEY,
+      is_template_email: isTemplateEmail
+    };
+  
+    try {
+      const res = await axios.post(process.env.URL, data);
+      logger.info(`Email Sending Response: ${res.data}`);
+    } catch (error) {
+      logger.error(`Error Sending Email: ${error.message}`);
+    }
+  };
+
+
+
+
+module.exports = {validateToken,upload,sendMail}
