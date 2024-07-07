@@ -2,7 +2,6 @@ require('dotenv').config();
 const multer = require('multer');
 const path = require('path');
 const axios = require('axios');
-const logger = require('./logger');
 
 const jwt = require('jsonwebtoken');
 
@@ -53,9 +52,9 @@ const sendMail = async (to, subject, content, isTemplateEmail = false) => {
   
     try {
       const res = await axios.post(process.env.URL, data);
-      logger.info(`Email Sending Response: ${res.data}`);
+      console.log(`Email Sending Response: ${res.data}`);
     } catch (error) {
-      logger.error(`Error Sending Email: ${error.message}`);
+      console.log(`Error Sending Email: ${error.message}`);
     }
   };
 
