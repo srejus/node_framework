@@ -57,7 +57,7 @@ const sendMail = async (to, subject, content, isTemplateEmail = false) => {
     };
   
     try {
-      const res = await axios.post(process.env.URL, data);
+      const res = await axios.post(process.env.EMAIL_URL, data);
       console.log(`Email Sending Response: ${res.data}`);
     } catch (error) {
       console.log(`Error Sending Email: ${error.message}`);
